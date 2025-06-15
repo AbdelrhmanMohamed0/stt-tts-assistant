@@ -62,7 +62,7 @@ voice_assistant/
 ## 🚀 Running the Assistant
 
 ```bash
-python assistant.py
+python app.py
 ```
 
 You will see a simple menu like:
