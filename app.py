@@ -1,5 +1,7 @@
+# Required installations:
 # pip install gTTS SpeechRecognition pydub google-generativeai
-# sudo apt install ffmpeg  # مهم لـ pydub
+# sudo apt install ffmpeg  # Required for pydub to play audio
+
 import os
 import time
 import speech_recognition as sr
@@ -9,16 +11,15 @@ from pydub.playback import play
 from datetime import datetime
 import google.generativeai as genai
 
-# ⚠️ تحميل المفتاح من متغير بيئة (وليس مباشر في الكود)
-#export GEMINI_API_KEY="AIzaSyDG-5NaPO8dIp65SnJvzMOeG8RRayPfWGA"
+# ⚠️ Load API key from environment variable for security
+# Example: export GEMINI_API_KEY="your_api_key"
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))  # أنشئ متغير بيئة بدلًا من وضع المفتاح صريحًا
-
-# 📁 إنشاء مجلد للإخراج
+# Create a directory to store output audio files
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# 🗣️ تحويل النص إلى كلام وحفظه
+# 🔊 Convert text to speech and play it
 def text_to_speech(text, lang='en'):
     try:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -31,7 +32,7 @@ def text_to_speech(text, lang='en'):
     except Exception as e:
         print(f"🔊 Error in TTS: {e}")
 
-# 🎤 تحويل الكلام إلى نص
+# 🎤 Convert speech to text
 def speech_to_text():
     r = sr.Recognizer()
     try:
@@ -49,7 +50,7 @@ def speech_to_text():
         print(f"⚠️ Error in speech recognition: {e}")
     return None
 
-# 🧭 القائمة الرئيسية
+# 🧭 Main menu loop
 def main():
     print("🌟 Voice Assistant System 🌟")
     while True:
